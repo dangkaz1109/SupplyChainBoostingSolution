@@ -1,0 +1,22 @@
+ipython
+jupyterlab
+matplotlib
+mkdocs
+notebook
+numpy
+pandas
+pip
+pytest
+python-dotenv
+ruff
+scikit-learn
+joblib
+fastapi
+uvicorn
+pydantic
+streamlit
+requests
+seaborn
+missingno
+xgboost
+-e .
