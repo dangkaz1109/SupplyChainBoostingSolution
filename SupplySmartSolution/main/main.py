@@ -26,7 +26,7 @@ def main():
     
     for order in orders:
         result = pipeline.process_order(order)
-        
+        a
         # Color coding simulation (using text for broad compatibility)
         fraud_alert = "(!)" if result.is_fraud else "   "
         risk_alert = "(!)" if result.late_delivery_risk else "   "

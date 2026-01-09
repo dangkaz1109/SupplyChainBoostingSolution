@@ -11,14 +11,6 @@ class OrderData(BaseModel):
     shipping_mode: Literal['Standard Class', 'First Class', 'Second Class', 'Same Day']
     shipping_date_idx: int  # Simulation of days to ship
     
-class PredictionResult(BaseModel):
-    order_id: str
-    is_fraud: bool
-    fraud_probability: float
-    late_delivery_risk: bool
-    risk_probability: float
-    recommended_action: str
-
 class ChurnInput(BaseModel):
     customer_id: str
     tenure: int
@@ -28,7 +20,37 @@ class ChurnInput(BaseModel):
     PaymentMethod: Literal['Electronic check', 'Mailed check', 'Bank transfer (automatic)', 'Credit card (automatic)']
     InternetService: Literal['DSL', 'Fiber optic', 'No']
 
-class ChurnPredictionResult(BaseModel):
+class ChurnResult(BaseModel):
     customer_id: str
     churn: bool
     churn_probability: float
+
+class FraudInput(BaseModel):
+    pass
+
+class FraudResult(BaseModel):
+    pass
+
+class LateRiskInput(BaseModel):
+    pass
+
+class LateRiskResult(BaseModel):
+    pass
+
+class AllocInput(BaseModel):
+    pass
+
+class AllocResult(BaseModel):
+    pass
+
+class DiscountInput(BaseModel):
+    pass
+
+class DiscountResult(BaseModel):
+    pass
+
+class ShipmodeInput(BaseModel):
+    pass
+
+class ShipmodeResult(BaseModel):
+    pass

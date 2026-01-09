@@ -6,7 +6,7 @@ import uuid
 st.set_page_config(page_title="SupplySmart Churn Prediction", layout="wide")
 
 # --- Page Title and Description ---
-st.title("🔮 Customer Churn Prediction")
+st.title("Customer Churn Prediction")
 st.markdown("""
 This application demonstrates a full-stack ML pipeline for predicting customer churn.
 Enter customer details below to get a churn prediction from the backend API.

@@ -1,7 +1,7 @@
 import random
 from schemas.contracts import OrderData
 
-class LateDeliveryRiskModel:
+class LateRisk:
     def predict_risk(self, order: OrderData) -> tuple[bool, float]:
         """
         Returns (is_late_risk, probability)
