@@ -1,12 +1,12 @@
 import streamlit as st
 import requests
 import uuid
-
+from schemas.contracts import DiscountInput
 # --- Page Configuration ---
 st.set_page_config(page_title="SupplySmart Churn Prediction", layout="wide")
 
 # --- Page Title and Description ---
-st.title("Customer Churn Prediction")
+st.title("Discount")
 st.markdown("""
 This application demonstrates a full-stack ML pipeline for predicting customer churn.
 Enter customer details below to get a churn prediction from the backend API.
@@ -17,42 +17,29 @@ Enter customer details below to get a churn prediction from the backend API.
 """)
 
 # --- API Configuration ---
-API_URL = "http://localhost:8000/predict/churn"
+API_URL = "http://localhost:8000/predict/discount"
 
 # --- Input Form ---
 col1, col2 = st.columns([1, 2])
 
 with col1:
-    st.header("Customer Details")
+    st.header("Customer Data")
     
     # Use a form to group inputs
     with st.form("churn_input_form"):
-        customer_id = st.text_input("Customer ID", value=str(uuid.uuid4()))
-        tenure = st.slider("Tenure (Months)", 1, 72, 12)
-        monthly_charges = st.number_input("Monthly Charges ($)", min_value=18.0, max_value=120.0, value=75.0, step=1.0)
-        total_charges = st.number_input("Total Charges ($)", min_value=18.0, max_value=10000.0, value=1000.0)
-        contract = st.selectbox("Contract Type", ['Month-to-month', 'One year', 'Two year'])
-        payment_method = st.selectbox("Payment Method", ['Electronic check', 'Mailed check', 'Bank transfer (automatic)', 'Credit card (automatic)'])
-        internet_service = st.selectbox("Internet Service", ['DSL', 'Fiber optic', 'No'])
+        total_charges = st.number_input("Data: ")
         
         # Form submission button
-        submitted = st.form_submit_button("Predict Churn")
+        submitted = st.form_submit_button("Discount")
 
 # --- Prediction Logic and Display ---
 with col2:
-    st.header("Prediction Result")
+    st.header("Discount Result")
     
     if submitted:
         # 1. Create payload from form data
-        payload = {
-            "customer_id": customer_id,
-            "tenure": tenure,
-            "MonthlyCharges": monthly_charges,
-            "TotalCharges": total_charges,
-            "Contract": contract,
-            "PaymentMethod": payment_method,
-            "InternetService": internet_service
-        }
+        inp = DiscountInput(data = total_charges)
+        payload = inp.model_dump()
         
         # 2. Call the API
         try:
@@ -63,19 +50,10 @@ with col2:
             if response.status_code == 200:
                 result = response.json()
                 
-                churn_prob = result['churn_probability']
-                is_churn = result['churn']
                 
-                st.subheader(f"Customer: `{result['customer_id']}`")
+                ressult = result['output']
                 
-                if is_churn:
-                    st.error(f"Prediction: CHURN (Probability: {churn_prob:.2%})")
-                    st.write("This customer is likely to churn. Consider taking retention actions.")
-                else:
-                    st.success(f"Prediction: NO CHURN (Probability: {churn_prob:.2%})")
-                    st.write("This customer is likely to stay.")
-                
-                st.progress(churn_prob)
+                st.write(f"{ressult:.2%}")
                 st.caption("Note: The prediction is based on a placeholder model and is for demonstration purposes only.")
                 
                 with st.expander("See Raw API Response"):

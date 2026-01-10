@@ -44,10 +44,12 @@ class AllocResult(BaseModel):
     pass
 
 class DiscountInput(BaseModel):
-    pass
+    data: float
+    
 
 class DiscountResult(BaseModel):
-    pass
+    output: float
+    
 
 class ShipmodeInput(BaseModel):
     pass
