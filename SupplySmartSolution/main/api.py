@@ -37,6 +37,19 @@ def predict_churn(customer_data: DiscountInput):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred during prediction: {str(e)}")
 
+
+from data.data_engine import DataEngine
+from data.build_pipeline import build_bronze
+import pandas as pd
+
+
+db = DataEngine()
+@app.get("/data/sample_data")
+async def get_data():
+    get_data = pd.read_sql(build_bronze(db, r"D:\AI_RnD\SupplySmartSolution\SupplySmartSolution\data\raw\DataCoSupplyChainDataset.csv", "SAMPLE"), db.con)
+    return {"result": f"{str(get_data.iloc[0])}"}
+    
+
 if __name__ == "__main__":
     uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True)
 
